@@ -1,5 +1,6 @@
 const express = require('express');
-const {signupcontrol,logincontroller} = require("../controller/authcontrol")
+const {requireSignIn}=require("../Middleware/authmiddleware")
+const {signupcontrol,logincontroller, getuserdetailscontroller} = require("../controller/authcontrol")
 
 const router = express.Router();
 
@@ -7,7 +8,11 @@ const router = express.Router();
 router.post("/signup",signupcontrol);
 
 //route2
-router.post("/login",logincontroller)
+router.post("/login",logincontroller);
+
+//route3
+router.post("/getuser",requireSignIn, getuserdetailscontroller)
+
 
 
 

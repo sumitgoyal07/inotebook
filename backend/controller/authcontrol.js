@@ -90,9 +90,43 @@ const logincontroller =async(req,res)=>{
         user
       });
   } catch (error) {
-    
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Errro in login",
+      error,
+    });
   }
+
+};
+
+//getuser
+const getuserdetailscontroller=async(req,res)=>{
+  const{email,password}=req.body;
+   //validations
+   if (!email) {
+    return res.send({ message: "Email is Required" });
+  };
+  if (!password) {
+    return res.send({ message: "Password is Required" });
+  };
+try {
+  const user = await Usermodel.findById(req.user._id).select("-password");
+  res.status(200).send({
+    message:"user details",
+    user,
+  })
+} catch (error) {
+  console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Please Authnication Using a Valid Token",
+      error,
+    });
+}
+  
+
 
 }
 
-module.exports = { signupcontrol,logincontroller }
+module.exports = { signupcontrol,logincontroller,getuserdetailscontroller }
