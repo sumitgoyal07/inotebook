@@ -11,7 +11,7 @@ router.post("/signup",signupcontrol);
 router.post("/login",logincontroller);
 
 //route3
-router.post("/getuser",requireSignIn, getuserdetailscontroller)
+router.get("/getuser",requireSignIn, getuserdetailscontroller)
 
 
 

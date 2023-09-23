@@ -5,7 +5,6 @@ const addnotes = async (req, res) => {
 
     try {
         const { title, description, tag } = req.body
-        const user = req.user._id
         //validation
         if (!title) {
             return res.send({ message: "title is Required" });
@@ -18,7 +17,7 @@ const addnotes = async (req, res) => {
         }
 
         const notes = await Notesmodel.create({
-            user,
+            user:req.user._id,
             title,
             description,
             tag,
@@ -99,7 +98,7 @@ const deletenotes = async (req, res) => {
 
     try {
         //validation
-        const note = Notesmodel.findById(req.params.id);
+        const note = await Notesmodel.findById(req.params.id);
         if (note.user.toString() !== req.user._id) {
             return res.send({ message: "Please Authenicate With Valid Token" });
         }
